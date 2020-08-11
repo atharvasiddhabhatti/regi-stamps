@@ -1,23 +1,24 @@
 variables:
-  RELEASE_NAME: "SERVICE_NAME"
+  RELEASE_NAME: "project4554"
   SERVICE_PORT: 8080
-  REGISTRY_URL: 279716074232.dkr.ecr.us-east-1.amazonaws.com/pgdockrepo
+  REGISTRY_URL: 751503455312.dkr.ecr.us-east-1.amazonaws.com/pgdockrepo
+  SONAR_URL: "http://pg-sonar-altimetrik-com-82028342.us-west-2.elb.amazonaws.com"
+  SONAR_LOGIN: "cc3fc35cad01a325d1b3904bcf3aa38b153fa7f1"
   
 stages:
   - Build
-  - Test
   - ReleaseCleanup
   - ReleaseDeploy
   - Validation
-  
+
 Build:
   stage: Build
   script:
-  - mvn  clean install
-  - $(aws ecr get-login --no-include-email --region us-west-2)
-  - docker build -t 279716074232.dkr.ecr.us-east-1.amazonaws.com/pgdockrepo:$CI_PIPELINE_ID .
-  - docker push 279716074232.dkr.ecr.us-east-1.amazonaws.com/pgdockrepo:$CI_PIPELINE_ID
-  
+  - mvn  clean install -Dk8s.db.env=db-config-k8s
+  - $(aws ecr get-login --no-include-email --region us-east-1)
+  - docker build -t 751503455312.dkr.ecr.us-east-1.amazonaws.com/pgdockrepo:$CI_PIPELINE_ID .
+  - docker push 751503455312.dkr.ecr.us-east-1.amazonaws.com/pgdockrepo:$CI_PIPELINE_ID
+
 ReleaseCleanup:
    stage: ReleaseCleanup
    script: 
@@ -32,7 +33,7 @@ ReleaseDeploy:
    - sed -i s/#BUILD_ID#/$CI_PIPELINE_ID/g ./helm/service/values.yaml 
    - sed -i s/#SERVICE_PORT#/$SERVICE_PORT/g ./helm/service/values.yaml
    - cd ./helm && /usr/local/bin/helm install service --name $RELEASE_NAME
-   
+
 Validation:
     stage: Validation
     script:

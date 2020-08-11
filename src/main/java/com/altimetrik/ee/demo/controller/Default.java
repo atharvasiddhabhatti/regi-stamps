@@ -31,8 +31,8 @@ public class Default {
 					+ "<h2>Welcome to Playground Engineering Environment</h2>\n" + "<h3>Database access details</h3>\n"
 					+ "<table align=center>\n" + "  <tr>\n" + "    <th>DB Admin Console</th>\n" + "    <th>JDBC URL</th>\n"
 					+ "    <th>User Name</th>\n" + "    <th>Password</th>\n" + "  </tr>\n" + "  <tr>\n"
-					+ "    <td><a target='_blank' href='https://pgtest.altimetrik.com/SERVICE_NAME/SERVICE_NAME/'>https://pgtest.altimetrik.com/SERVICE_NAME/SERVICE_NAME/</a></td>\n"
-					+ "    <td>jdbc:h2:file:./src/main/resources/SERVICE_NAME</td>\n" + "    <td>playground</td>\n"
+					+ "    <td><a target='_blank' href='https://pgsandbox.altimetrik.com/project4554/project4554/'>https://pgsandbox.altimetrik.com/project4554/project4554/</a></td>\n"
+					+ "    <td>jdbc:h2:file:./src/main/resources/project4554</td>\n" + "    <td>playground</td>\n"
 					+ "    <td>password</td>\n" + "  </tr>\n" + "</table>\n" + "</body>\n" + "</html>\n";
 		}
 		return new ResponseEntity<>(data, HttpStatus.OK);
