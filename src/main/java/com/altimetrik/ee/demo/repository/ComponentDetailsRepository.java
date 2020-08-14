@@ -1,14 +1,13 @@
 package com.altimetrik.ee.demo.repository;
 
-import java.util.List;
-
+import com.altimetrik.ee.demo.bean.ComponentDetailsBean;
+import com.altimetrik.ee.demo.entity.ComponentDetailsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.altimetrik.ee.demo.bean.ComponentDetailsBean;
-import com.altimetrik.ee.demo.entity.ComponentDetailsEntity;
+import java.util.List;
 
 @Repository
 public interface ComponentDetailsRepository extends JpaRepository<ComponentDetailsEntity, Long> {

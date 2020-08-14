@@ -1,8 +1,7 @@
 package com.altimetrik.ee.demo.service;
 
-import org.springframework.stereotype.Service;
-
 import com.altimetrik.ee.demo.bean.PairedComponentDetailsBean;
+import org.springframework.stereotype.Service;
 
 @Service
 public interface ComponentDetailsService {

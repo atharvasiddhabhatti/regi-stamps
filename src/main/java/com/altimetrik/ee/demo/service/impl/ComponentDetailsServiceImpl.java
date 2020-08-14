@@ -1,7 +1,9 @@
 package com.altimetrik.ee.demo.service.impl;
 
-import java.util.UUID;
-
+import com.altimetrik.ee.demo.bean.PairedComponentDetailsBean;
+import com.altimetrik.ee.demo.entity.ComponentDetailsEntity;
+import com.altimetrik.ee.demo.repository.ComponentDetailsRepository;
+import com.altimetrik.ee.demo.service.ComponentDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.altimetrik.ee.demo.bean.PairedComponentDetailsBean;
-import com.altimetrik.ee.demo.entity.ComponentDetailsEntity;
-import com.altimetrik.ee.demo.repository.ComponentDetailsRepository;
-import com.altimetrik.ee.demo.service.ComponentDetailsService;
+import java.util.UUID;
 
 @Service
 public class ComponentDetailsServiceImpl implements ComponentDetailsService {
