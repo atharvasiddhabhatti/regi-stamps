@@ -2,9 +2,12 @@ package com.altimetrik.ee.demo.dto;
 
 import com.altimetrik.ee.demo.entity.Role;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
-
+@Getter
+@Setter
 public class UserResponseDTO {
 
   @ApiModelProperty(position = 0)
@@ -15,6 +18,15 @@ public class UserResponseDTO {
   private String email;
   @ApiModelProperty(position = 3)
   List<Role> roles;
+  @ApiModelProperty(position = 4)
+  String city;
+  @ApiModelProperty(position = 4)
+  String address;
+  @ApiModelProperty(position = 4)
+  Integer regNo;
+  @ApiModelProperty(position = 4)
+  Integer propertyNo;
+
 
   public Integer getId() {
     return id;

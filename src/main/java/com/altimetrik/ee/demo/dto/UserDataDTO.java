@@ -15,6 +15,14 @@ public class UserDataDTO {
   private String password;
   @ApiModelProperty(position = 3)
   List<Role> roles;
+  @ApiModelProperty(position = 4)
+  private String city;
+  @ApiModelProperty(position = 5)
+  private String address;
+  @ApiModelProperty(position = 6)
+  private long regNo;
+  @ApiModelProperty(position = 7)
+  private long PropertyNo;
 
   public String getUsername() {
     return username;
@@ -48,4 +56,19 @@ public class UserDataDTO {
     this.roles = roles;
   }
 
+  public String getCity() {return city;}
+
+  public void setCity(String city) {this.city = city;}
+
+  public String getAddress() {return address;}
+
+  public void setAddress(String address) {this.address = address;}
+
+  public long getRegNo() {return regNo;}
+
+  public void setRegNo(long regNo) { this.regNo = regNo; }
+
+  public long getPropertyNo() { return PropertyNo; }
+
+  public void setPropertyNo(long propertyNo) {PropertyNo = propertyNo; }
 }

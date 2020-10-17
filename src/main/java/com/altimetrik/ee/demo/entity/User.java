@@ -1,5 +1,8 @@
 package com.altimetrik.ee.demo.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -9,7 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Size;
 import java.util.List;
-
+@Getter
+@Setter
 @Entity
 public class User {
 
@@ -29,6 +33,18 @@ public class User {
 
   @ElementCollection(fetch = FetchType.EAGER)
   List<Role> roles;
+
+  @Column
+  String city;
+
+  @Column
+  String address;
+
+  @Column
+  Integer regNo;
+
+  @Column
+  Integer PropertyNo;
 
   public Integer getId() {
     return id;

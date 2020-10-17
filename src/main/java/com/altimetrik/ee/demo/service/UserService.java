@@ -1,7 +1,9 @@
 package com.altimetrik.ee.demo.service;
 
+import com.altimetrik.ee.demo.entity.Property;
 import com.altimetrik.ee.demo.entity.User;
 import com.altimetrik.ee.demo.exception.CustomException;
+import com.altimetrik.ee.demo.repository.PropertyRepository;
 import com.altimetrik.ee.demo.repository.UserRepository;
 import com.altimetrik.ee.demo.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,10 @@ public class UserService {
 
   @Autowired
   private UserRepository userRepository;
+
+
+  @Autowired
+  private PropertyRepository propertyRepository;
 
   @Autowired
   private PasswordEncoder passwordEncoder;
@@ -66,4 +72,9 @@ public class UserService {
     return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRoles());
   }
 
+    public Property addProperty(Property propery) {
+
+   return  propertyRepository.save(propery);
+
+    }
 }

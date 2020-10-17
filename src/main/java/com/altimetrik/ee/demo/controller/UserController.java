@@ -1,7 +1,9 @@
 package com.altimetrik.ee.demo.controller;
 
+import com.altimetrik.ee.demo.dto.ProperyDTO;
 import com.altimetrik.ee.demo.dto.UserDataDTO;
 import com.altimetrik.ee.demo.dto.UserResponseDTO;
+import com.altimetrik.ee.demo.entity.Property;
 import com.altimetrik.ee.demo.entity.User;
 import com.altimetrik.ee.demo.service.UserService;
 import io.swagger.annotations.Api;
@@ -57,8 +59,19 @@ public class UserController {
 
 
 
+  @PostMapping("/property")
+  @ApiOperation(value = "${UserController.addProperty}")
+  @ApiResponses(value = {//
+          @ApiResponse(code = 400, message = "Something went wrong"), //
+          @ApiResponse(code = 403, message = "Access denied"), //
+          @ApiResponse(code = 422, message = "Username is already in use")})
+  public Property addProperty(@RequestBody ProperyDTO properyDTO) {
+    return userService.addProperty(modelMapper.map(properyDTO, Property.class));
+  }
+
+
   @GetMapping(value = "/{username}")
-  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER') ")
+  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER') or hasRole('ROLE_BUYER') or hasRole('ROLE_SELLER')")
   @ApiOperation(value = "${UserController.search}", response = UserResponseDTO.class, authorizations = { @Authorization(value="apiKey") })
   @ApiResponses(value = {//
       @ApiResponse(code = 400, message = "Something went wrong"), //
@@ -70,7 +83,7 @@ public class UserController {
   }
 
   @GetMapping(value = "/me")
-  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER') or hasRole('ROLE_BUYER') or hasRole('ROLE_SELLER')")
   @ApiOperation(value = "${UserController.me}", response = UserResponseDTO.class, authorizations = { @Authorization(value="apiKey") })
   @ApiResponses(value = {//
       @ApiResponse(code = 400, message = "Something went wrong"), //
@@ -81,7 +94,7 @@ public class UserController {
   }
 
   @GetMapping("/refresh")
-  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER') or  hasRole('ROLE_BUYER') or hasRole('ROLE_SELLER')")
   public String refresh(HttpServletRequest req) {
     return userService.refresh(req.getRemoteUser());
   }
