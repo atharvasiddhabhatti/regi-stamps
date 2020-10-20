@@ -18,4 +18,5 @@ public class ProperyDTO {
     int surveyno;
     String type;
     String email;
+    String status;
 }

@@ -36,4 +36,6 @@ public class Property {
     String type;
     @Column
     String email;
+    @Column
+    String status;
 }
