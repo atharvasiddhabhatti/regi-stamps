@@ -38,4 +38,6 @@ public class Property {
     String email;
     @Column
     String status;
+    @Column
+    String username;
 }

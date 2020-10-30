@@ -12,12 +12,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
   @Autowired
   private JwtTokenProvider jwtTokenProvider;
   @Autowired RestAuthenticationEntryPoint restAuthenticationEntryPoint;
@@ -27,6 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     // Disable CSRF (cross site request forgery)
     http.csrf().disable();
+    http.cors();
 
     // No session will be created or used by spring security
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -46,6 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
     // Optional, if you want to test the API from a browser
     http.httpBasic();
+
   }
 
   @Override
@@ -61,6 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
         .ignoring()
         .antMatchers("/h2-console/**/**").antMatchers("/h2-console/**");
+
   }
 
   @Bean

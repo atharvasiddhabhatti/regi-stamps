@@ -1,7 +1,7 @@
 package com.altimetrik.ee.demo.controller;
 
 import com.altimetrik.ee.demo.dto.PropertyResponseDTO;
-import com.altimetrik.ee.demo.dto.ProperyDTO;
+import com.altimetrik.ee.demo.dto.PropertyDTO;
 import com.altimetrik.ee.demo.dto.UserDataDTO;
 import com.altimetrik.ee.demo.dto.UserResponseDTO;
 import com.altimetrik.ee.demo.entity.Property;
@@ -15,17 +15,14 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.Authorization;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.ws.Response;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/users")
 @Api(tags = "users")
@@ -36,7 +33,6 @@ public class UserController {
 
   @Autowired
   private ModelMapper modelMapper;
-
   @PostMapping("/signin")
   @ApiOperation(value = "${UserController.signIn}")
   @ApiResponses(value = {//
@@ -47,7 +43,6 @@ public class UserController {
                       @ApiParam("Password") @RequestParam String password) {
     return userService.signIn(username, password);
   }
-
   @PostMapping("/signup")
   @ApiOperation(value = "${UserController.signUp}")
   @ApiResponses(value = {//
@@ -65,9 +60,9 @@ public class UserController {
   @ApiResponses(value = {//
           @ApiResponse(code = 400, message = "Something went wrong"), //
           @ApiResponse(code = 403, message = "Access denied"), //
-          @ApiResponse(code = 422, message = "Username is already in use")})
-  public Property addProperty(@RequestBody ProperyDTO properyDTO) {
-    return userService.addProperty(modelMapper.map(properyDTO, Property.class));
+          @ApiResponse(code = 422, message = "Property is already in use")})
+  public Property addProperty(@RequestBody PropertyDTO propertyDTO) {
+    return userService.addProperty(modelMapper.map(propertyDTO, Property.class));
   }
 
 
@@ -93,6 +88,18 @@ public class UserController {
           @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
   public PropertyResponseDTO getProperty(@ApiParam("Property Details:-") @PathVariable Integer id) {
     return modelMapper.map(userService.findProperty(id), PropertyResponseDTO.class);
+  }
+
+  @GetMapping(value = "/property/user/{username}")
+  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER') or hasRole('ROLE_BUYER') or hasRole('ROLE_SELLER')")
+  @ApiOperation(value = "${PropertyController.search}", response = PropertyResponseDTO.class, authorizations = { @Authorization(value="apiKey") })
+  @ApiResponses(value = {//
+          @ApiResponse(code = 400, message = "Something went wrong"), //
+          @ApiResponse(code = 403, message = "Access denied"), //
+          @ApiResponse(code = 404, message = "The Property doesn't exist"), //
+          @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+  public ResponseEntity<?> getProperty(@ApiParam("Property Details:-") @PathVariable String username) {
+    return ResponseEntity.ok().body(userService.findPropertyByUsername(username));
   }
 
   @GetMapping(value = "/me")

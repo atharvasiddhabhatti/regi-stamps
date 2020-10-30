@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class ProperyDTO {
+public class PropertyDTO {
     String firstName;
     String lastName;
     String address;
@@ -19,4 +19,5 @@ public class ProperyDTO {
     String type;
     String email;
     String status;
+    String username;
 }

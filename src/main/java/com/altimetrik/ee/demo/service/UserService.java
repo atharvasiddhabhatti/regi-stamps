@@ -6,7 +6,6 @@ import com.altimetrik.ee.demo.exception.CustomException;
 import com.altimetrik.ee.demo.repository.PropertyRepository;
 import com.altimetrik.ee.demo.repository.UserRepository;
 import com.altimetrik.ee.demo.security.JwtTokenProvider;
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -73,6 +74,16 @@ public class UserService {
         return property;
     }
 
+    public List<Property> findPropertyByUsername(String username) {
+
+        List<Property> properties = propertyRepository.findByUsername(username).orElse(null);
+        System.out.println(properties);
+        if (properties == null) {
+            throw new CustomException("The Property doesn't exist", HttpStatus.NOT_FOUND);
+        }
+        return properties;
+    }
+
     public User findCurrentUser(HttpServletRequest req) {
         return userRepository.findByUsername(jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req)));
     }
@@ -81,9 +92,9 @@ public class UserService {
         return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRoles());
     }
 
-    public Property addProperty(Property propery) {
+    public Property addProperty(Property property) {
 
-        return propertyRepository.save(propery);
+        return propertyRepository.save(property);
 
     }
 }

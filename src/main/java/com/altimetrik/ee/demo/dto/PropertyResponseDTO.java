@@ -35,5 +35,7 @@ public class PropertyResponseDTO {
     String email;
     @ApiModelProperty(position = 13)
     String status;
+    @ApiModelProperty(position = 14)
+    String username;
 }
 
