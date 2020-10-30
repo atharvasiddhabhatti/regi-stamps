@@ -1,6 +1,7 @@
 package com.altimetrik.ee.demo.controller;
 
 import com.altimetrik.ee.demo.dto.PropertyDTO;
+import com.altimetrik.ee.demo.dto.PropertyPatchDTO;
 import com.altimetrik.ee.demo.entity.Property;
 import com.altimetrik.ee.demo.service.AdminService;
 import com.altimetrik.ee.demo.service.UserService;
@@ -31,8 +32,8 @@ public class AdminController {
             @ApiResponse(code = 403, message = "Access denied"), //
             @ApiResponse(code = 422, message = "Property is already Approved")})
 
-    public ResponseEntity<?> patchProperty(@RequestBody PropertyDTO propertyDTO) {
-        return ResponseEntity.ok().body(adminService.patchProperty(modelMapper.map(propertyDTO, Property.class)));
+    public ResponseEntity<?> patchProperty(@RequestBody PropertyPatchDTO propertyPatchDTO) {
+        return ResponseEntity.ok().body(adminService.patchProperty(modelMapper.map(propertyPatchDTO, Property.class)));
     }
 
 }
